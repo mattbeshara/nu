@@ -5,22 +5,11 @@
 (set @nu_files 	  (filelist "^nu/.*\.nu$"))
 (set @frameworks  '("Cocoa" "Nu" "Carbon"))
 
-(if (or isSnowLeopard isLion)
-    (then
-         ;; Make sure you download and build the mach_inject_bundle first
-         ;; Get it at git://github.com/rentzsch/mach_star.git
-         (if (isSnowLeopard)
-            (then (set @cflags "-isysroot /Developer/SDKs/MacOSX10.6.sdk "))
-            (else (set @cflags "-isysroot /Developer/SDKs/MacOSX10.7.sdk ")))
-         (set @ldflags " -framework Cocoa -framework Nu -framework Carbon -framework mach_inject_bundle")
-         (set @arch '("x86_64" )))
-    (else
-         ;; If not Snow Leopard, then use the included version of mach_star
-         (set @includes " -I../libinject/objc")
-         (set @ldflags " -framework Cocoa -framework Nu -framework Carbon -linject -L../libinject ")
-         (set @arch '("i386" ))))
+(set @cflags "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -F/Library/Frameworks ")
+(set @ldflags " -F/Library/Frameworks -framework Cocoa -framework Nu -framework Carbon -framework mach_inject_bundle")
+(set @arch '("x86_64"))
 
-(set @mflags " -fobjc-exceptions -fobjc-gc ")
+(set @mflags " -fobjc-exceptions ")
 
 ;; framework description
 (set @framework "NuInject")
