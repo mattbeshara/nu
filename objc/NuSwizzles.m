@@ -10,6 +10,7 @@
 #import "NuSwizzles.h"
 #import "NuInternals.h"
 #import "NuClass.h"
+#import <objc/runtime.h>
 
 #pragma mark - NuSwizzles.m
 
@@ -20,7 +21,7 @@
 
 - (void)nuSetObject:(id)anObject forKey:(id)aKey
 {
-    [self nuSetObject:((anObject == nil) ? (id)Nu__null : anObject) forKey:aKey];
+    [self zetObject:((anObject == nil) ? (id)Nu__null : anObject) forKey:aKey];
 }
 
 @end
@@ -61,6 +62,14 @@
 
 void nu_swizzleContainerClasses()
 {
+    SEL zOFKSel = sel_registerName("zetObject:forKey:");
+    SEL sOFKSel = sel_registerName("setObject:forKey:");
+    Class nscfDict = objc_getClass("__NSCFDictionary");
+    Method setOFKMet = class_getInstanceMethod(nscfDict, sOFKSel);
+    const char *types = method_getTypeEncoding(setOFKMet);
+    IMP sOFKImp = method_getImplementation(setOFKMet);
+    BOOL ok = class_addMethod(nscfDict, zOFKSel, sOFKImp, types);
+    
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     Class NSCFDictionary = NSClassFromString(@"NSCFDictionary");
     Class NSCFArray = NSClassFromString(@"NSCFArray");
