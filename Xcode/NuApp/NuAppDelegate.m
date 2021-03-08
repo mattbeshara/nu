@@ -17,7 +17,7 @@
 @class ViewController;
 
 @implementation NuAppDelegate
-@synthesize window,view,label;
+@synthesize window,view,log,interpreterListener;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -34,23 +34,52 @@
 	self.window.rootViewController = viewController;
 	self.view = [[UIView alloc] initWithFrame:frame];
 	viewController.view = self.view;
-	self.label = [[UILabel alloc] initWithFrame:frame];
-	self.label.text = @"Not run yet";
-	self.label.textAlignment = NSTextAlignmentCenter;
-	[self.view addSubview:self.label];
+
+	CGRect logFrame = frame;
+	logFrame.size.height -= 24;
+	logFrame.origin.y += 24;
+	self.log = [[UITextView alloc] initWithFrame:logFrame];
+	self.log.backgroundColor = [UIColor clearColor];
+	self.log.text = @"Not run yet";
+	[self.view addSubview:self.log];
 	self.view.backgroundColor = [UIColor whiteColor];
 
 	[self prepareTests];
 	int failures = [self runTests];
 	if (failures == 0) {
 		view.backgroundColor = [UIColor greenColor];
-		label.text = @"Everything Nu!";
+		self.log.text = @"Everything Nu!";
 	} else {
 		view.backgroundColor = [UIColor redColor];
-		label.text = [NSString stringWithFormat:@"%d failures!",failures];
+		self.log.text = [NSString stringWithFormat:@"%d failures!",failures];
 	}
 	
 	return YES;
+}
+
+- (void)log:(NSString *)message {
+	log.text = [log.text stringByAppendingFormat:@"\n%@", message];
+    [log scrollRangeToVisible:NSMakeRange(log.text.length - 2, 1)];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+	[self setupListener];
+}
+
+- (void)setupListener {
+	self.interpreterListener = [[InterpreterListener alloc] init];
+
+	self.interpreterListener.evalResultHandler = ^(id result) {
+		[self log:[NSString stringWithFormat:@"%@", result]];
+	};
+
+	[self.interpreterListener listenWithCompletionHandler:^(uint16_t port) {
+		if (port != 0) {
+			[self log:[NSString stringWithFormat:@"Listening succeeded on port %i", port]];
+		} else {
+			[self log:@"Listening failed"];
+		}
+	}];
 }
 
 -(void)prepareTests

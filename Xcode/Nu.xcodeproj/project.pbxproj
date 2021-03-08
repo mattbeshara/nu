@@ -222,6 +222,9 @@
 		4F43427C1420476C00AC1BFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F43427B1420476C00AC1BFD /* main.m */; };
 		56E07744170B028400FF0A4B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56E07743170B028400FF0A4B /* Default-568h@2x.png */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
+		C9151BED25F5A82800E8A8D3 /* InterpreterListener.h in Headers */ = {isa = PBXBuildFile; fileRef = C9151BEB25F5A82800E8A8D3 /* InterpreterListener.h */; };
+		C9151BF925F5A93400E8A8D3 /* InterpreterListener.m in Sources */ = {isa = PBXBuildFile; fileRef = C9151BEC25F5A82800E8A8D3 /* InterpreterListener.m */; };
+		C9151C1225F5AEA100E8A8D3 /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9151C1125F5AEA100E8A8D3 /* Network.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -438,6 +441,10 @@
 		56E07743170B028400FF0A4B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* Nu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9151BEB25F5A82800E8A8D3 /* InterpreterListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterpreterListener.h; sourceTree = "<group>"; };
+		C9151BEC25F5A82800E8A8D3 /* InterpreterListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterpreterListener.m; sourceTree = "<group>"; };
+		C9151C0A25F5AE2B00E8A8D3 /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = System/Library/Frameworks/Network.framework; sourceTree = SDKROOT; };
+		C9151C1125F5AEA100E8A8D3 /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/Network.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +460,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9151C1225F5AEA100E8A8D3 /* Network.framework in Frameworks */,
 				43B5D4101D3668A600D1E1FD /* libNuTouch.a in Frameworks */,
 				22B3B50513B0388C00B3AB31 /* Foundation.framework in Frameworks */,
 				22B3B50313B0386600B3AB31 /* UIKit.framework in Frameworks */,
@@ -507,6 +515,7 @@
 				22B3B38713B033D400B3AB31 /* test */,
 				22B3B50B13B03CF400B3AB31 /* Targets */,
 				034768DFFF38A50411DB9C8B /* Products */,
+				C9151C0925F5AE2B00E8A8D3 /* Frameworks */,
 			);
 			name = Nu;
 			sourceTree = "<group>";
@@ -744,6 +753,8 @@
 				1058C7B2FEA5585E11CA2CBB /* iOS Frameworks */,
 				22EE2C0813A4731600895861 /* NuAppDelegate.h */,
 				22EE2C0913A4731600895861 /* NuAppDelegate.m */,
+				C9151BEB25F5A82800E8A8D3 /* InterpreterListener.h */,
+				C9151BEC25F5A82800E8A8D3 /* InterpreterListener.m */,
 				22EE2C0013A4731600895861 /* Supporting Files */,
 			);
 			path = NuApp;
@@ -786,6 +797,15 @@
 			name = NuTouch;
 			sourceTree = "<group>";
 		};
+		C9151C0925F5AE2B00E8A8D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9151C1125F5AEA100E8A8D3 /* Network.framework */,
+				C9151C0A25F5AE2B00E8A8D3 /* Network.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -814,6 +834,7 @@
 				2217EC3B1CCDAE010082837B /* NuException.h in Headers */,
 				2217EC221CCDA9A00082837B /* NuMath.h in Headers */,
 				22716B221CCDCCD900E7ACDD /* NuBridgeSupport.h in Headers */,
+				C9151BED25F5A82800E8A8D3 /* InterpreterListener.h in Headers */,
 				2217EC311CCDAC600082837B /* NSBundle+Nu.h in Headers */,
 				2217EBFA1CCDA27A0082837B /* NSObject+Nu.h in Headers */,
 				2217EC131CCDA65F0082837B /* NuBlock.h in Headers */,
@@ -1115,6 +1136,7 @@
 			files = (
 				22EE2C0613A4731600895861 /* main.m in Sources */,
 				22EE2C0A13A4731600895861 /* NuAppDelegate.m in Sources */,
+				C9151BF925F5A93400E8A8D3 /* InterpreterListener.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1468,7 +1490,7 @@
 					../libffi/darwin_ios/include,
 				);
 				INFOPLIST_FILE = "NuApp/NuApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.radtastical.${PRODUCT_NAME:rfc1034identifier}";
@@ -1507,7 +1529,7 @@
 					../libffi/darwin_ios/include,
 				);
 				INFOPLIST_FILE = "NuApp/NuApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1554,7 +1576,7 @@
 					../libffi/darwin_common/include,
 					../libffi/darwin_ios/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1592,7 +1614,7 @@
 					../libffi/darwin_common/include,
 					../libffi/darwin_ios/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
