@@ -15,9 +15,12 @@
 #pragma mark - NuSwizzles.m
 
 @interface NSCFDictionarySwizzles : NSObject {}
+- (void)zetObject:(id)anObject forKey:(id)aKey;
 @end
 
 @implementation NSCFDictionarySwizzles
+
+- (void)zetObject:(id)anObject forKey:(id)aKey {}
 
 - (void)nuSetObject:(id)anObject forKey:(id)aKey
 {
@@ -68,7 +71,7 @@ void nu_swizzleContainerClasses()
     Method setOFKMet = class_getInstanceMethod(nscfDict, sOFKSel);
     const char *types = method_getTypeEncoding(setOFKMet);
     IMP sOFKImp = method_getImplementation(setOFKMet);
-    BOOL ok = class_addMethod(nscfDict, zOFKSel, sOFKImp, types);
+    class_addMethod(nscfDict, zOFKSel, sOFKImp, types);
     
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     Class NSCFDictionary = NSClassFromString(@"NSCFDictionary");
