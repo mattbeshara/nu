@@ -69,36 +69,47 @@
 
             string = [string stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
 
-            id cell = nil;
-            @try {
-                cell = [[Nu sharedParser] parse:string];
-            } @catch (NSException *exception) {
-                NSString *exceptionMessage = [NSString stringWithFormat:@"!!! Caught exception in parse, resetting parser: %@", exception];
-                [self handleEvalResult:exceptionMessage withConnection:connection];
-                [[Nu sharedParser] reset];
-                return YES;
-            }
-
-            if (![[Nu sharedParser] incomplete]) {
-                @try {
-                    id result = [[Nu sharedParser] eval:cell];
-                    if (result != nil) {
-                        [self handleEvalResult:result withConnection:connection];
-                    }
-                } @catch (NSException *exception) {
-                    NSString *exceptionMessage = [NSString stringWithFormat:@"!!! Caught exception in eval: %@", exception];
-                    [self handleEvalResult:exceptionMessage withConnection:connection];
-                }
-            }
-
+            [self parseEval:string withConnection:connection];
             return YES;
         });
     }
 }
 
-- (void)handleEvalResult:(id _Nonnull)result withConnection:(nw_connection_t _Nonnull)connection {
+- (void)parseEval:(NSString * _Nonnull)string {
+    [self parseEval:string withConnection:NULL];
+}
+
+- (void)parseEval:(NSString * _Nonnull)string withConnection:(nw_connection_t _Nullable)connection {
+    id cell = nil;
+    @try {
+        cell = [[Nu sharedParser] parse:string];
+    } @catch (NSException *exception) {
+        NSString *exceptionMessage = [NSString stringWithFormat:@"!!! Caught exception in parse, resetting parser: %@", exception];
+        [self handleEvalResult:exceptionMessage withConnection:connection];
+        [[Nu sharedParser] reset];
+        return;
+    }
+
+    if (![[Nu sharedParser] incomplete]) {
+        @try {
+            id result = [[Nu sharedParser] eval:cell];
+            if (result != nil) {
+                [self handleEvalResult:result withConnection:connection];
+            }
+        } @catch (NSException *exception) {
+            NSString *exceptionMessage = [NSString stringWithFormat:@"!!! Caught exception in eval: %@", exception];
+            [self handleEvalResult:exceptionMessage withConnection:connection];
+        }
+    }
+}
+
+- (void)handleEvalResult:(id _Nonnull)result withConnection:(nw_connection_t _Nullable)connection {
     if (self.evalResultHandler != nil) {
         self.evalResultHandler(result);
+    }
+
+    if (connection == NULL) {
+        return;
     }
 
     NSString *resultString = [NSString stringWithFormat:@"%@\n", result];
